@@ -12,7 +12,6 @@ const App = () => {
       worker: true,
       wasmURL: "/esbuild.wasm",
     });
-    console.log(ref.current);
   };
 
   useEffect(() => {
@@ -22,8 +21,13 @@ const App = () => {
   const onChange = (event: React.ChangeEvent<HTMLTextAreaElement>) =>
     setInput(event.target.value);
 
-  const onClick = () => {
-    console.log(input);
+  const onClick = async () => {
+    if (!ref.current) return;
+    const result = await ref.current.transform(input, {
+      loader: "jsx",
+      target: "es2015",
+    });
+    setCode(result.code);
   };
 
   return (
