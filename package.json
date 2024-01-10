@@ -11,10 +11,14 @@
   },
   "dependencies": {
     "@monaco-editor/react": "^4.6.0",
+    "@types/jscodeshift": "0.7.2",
     "@types/prettier": "^2.7.3",
     "axios": "^1.6.5",
+    "bulmaswatch": "^0.8.1",
     "esbuild-wasm": "0.8.27",
+    "jscodeshift": "0.11.0",
     "localforage": "^1.10.0",
+    "monaco-jsx-highlighter": "0.0.15",
     "prettier": "^2.8.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
