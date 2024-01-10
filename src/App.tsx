@@ -23,8 +23,7 @@ const App = () => {
     startService();
   }, []);
 
-  const onChange = (event: React.ChangeEvent<HTMLTextAreaElement>) =>
-    setInput(event.target.value);
+  const onChange = (value: string) => setInput(value);
 
   const onClick = async () => {
     if (!ref.current) return;
@@ -69,8 +68,7 @@ const App = () => {
 
   return (
     <div>
-      <CodeEditor />
-      <textarea value={input} onChange={onChange}></textarea>
+      <CodeEditor initialValue={input} onChange={onChange} />
       <div>
         <button onClick={onClick}>Submit</button>
       </div>
