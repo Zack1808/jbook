@@ -4,6 +4,8 @@ import { useState, useEffect, useRef } from "react";
 import { unpkgPathPlugin } from "./plugins/unpkg-path-plugin";
 import { fetchPlugin } from "./plugins/fetch-plugin";
 
+import CodeEditor from "./components/CodeEditor";
+
 const App = () => {
   const [input, setInput] = useState<string>("");
 
@@ -67,6 +69,7 @@ const App = () => {
 
   return (
     <div>
+      <CodeEditor />
       <textarea value={input} onChange={onChange}></textarea>
       <div>
         <button onClick={onClick}>Submit</button>
