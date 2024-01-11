@@ -6,6 +6,8 @@ import CodeEditor from "../components/CodeEditor";
 import Preview from "../components/Preview";
 import Resizable from "./Resizable";
 
+import "./CodeCell.css";
+
 const CodeCell: React.FC = () => {
   const [input, setInput] = useState<string>("");
   const [code, setCode] = useState<string>("");
@@ -19,11 +21,8 @@ const CodeCell: React.FC = () => {
 
   return (
     <Resizable axis="vertical">
-      <div>
+      <div className="code-cell-wrapper">
         <CodeEditor initialValue={input} onChange={onChange} />
-        <div>
-          <button onClick={onClick}>Submit</button>
-        </div>
         <Preview code={code} />
       </div>
     </Resizable>
