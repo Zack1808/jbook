@@ -1,8 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import MDEditor from "@uiw/react-md-editor";
 
+import "./TextEditor.css";
+
 const TextEditor: React.FC = () => {
-  const [editting, setEditting] = useState<boolean>(false);
+  const [editting, setEditting] = useState<boolean>(true);
   const [text, setText] = useState<string>("");
 
   const editorRef = useRef<HTMLDivElement | null>(null);
@@ -29,14 +31,14 @@ const TextEditor: React.FC = () => {
 
   if (!editting) {
     return (
-      <div onClick={() => setEditting(true)}>
-        <MDEditor.Markdown source={"# Header"} />
+      <div className="text-editor" onClick={() => setEditting(true)}>
+        <MDEditor.Markdown source={text} />
       </div>
     );
   }
 
   return (
-    <div ref={editorRef}>
+    <div className="text-editor" ref={editorRef}>
       <MDEditor value={text} onChange={onChange} />
     </div>
   );
