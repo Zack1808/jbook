@@ -10,8 +10,11 @@ interface ResizableType {
 const Resizable: React.FC<ResizableType> = ({ axis, children }) => {
   return (
     <ResizableBox
+      className={
+        axis === "horizontal" ? "resize-horizontal" : "resize-vertical"
+      }
       height={axis === "horizontal" ? Infinity : 300}
-      width={axis === "horizontal" ? 300 : Infinity}
+      width={axis === "horizontal" ? window.innerWidth * 0.75 : Infinity}
       axis={axis === "horizontal" ? "x" : "y"}
       resizeHandles={axis === "horizontal" ? ["e"] : ["s"]}
       maxConstraints={

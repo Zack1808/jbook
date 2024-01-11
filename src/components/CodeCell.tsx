@@ -22,7 +22,9 @@ const CodeCell: React.FC = () => {
   return (
     <Resizable axis="vertical">
       <div className="code-cell-wrapper">
-        <CodeEditor initialValue={input} onChange={onChange} />
+        <Resizable axis="horizontal">
+          <CodeEditor initialValue={input} onChange={onChange} />
+        </Resizable>
         <Preview code={code} />
       </div>
     </Resizable>
