@@ -4,6 +4,7 @@ import "./Preview.css";
 
 interface PreviewPropsType {
   code: string;
+  bundlingStatus: string;
 }
 
 const html = `
@@ -41,7 +42,7 @@ const html = `
   </html>
 `;
 
-const Preview: React.FC<PreviewPropsType> = ({ code }) => {
+const Preview: React.FC<PreviewPropsType> = ({ code, bundlingStatus }) => {
   const iframe = useRef<any>();
 
   useEffect(() => {
@@ -61,6 +62,12 @@ const Preview: React.FC<PreviewPropsType> = ({ code }) => {
         srcDoc={html}
         sandbox="allow-scripts"
       />
+      {bundlingStatus && (
+        <div className="preview-error">
+          <h4>Runtime Error</h4>
+          {bundlingStatus}
+        </div>
+      )}
     </div>
   );
 };
