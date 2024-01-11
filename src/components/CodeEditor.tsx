@@ -42,6 +42,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, onChange }) => {
       </button>
       <MonacoEditor
         value={initialValue}
+        defaultValue="// Write some JS code here"
         onChange={handleChange}
         onMount={(editor) => (editorRef.current = editor)}
         height="100%"
