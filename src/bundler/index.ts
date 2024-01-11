@@ -13,19 +13,31 @@ export default async (rawCode: string) => {
     });
   }
 
-  const result = await service.build({
-    entryPoints: ["index.js"],
-    bundle: true,
-    write: false,
-    plugins: [
-      unpkgPathPlugin() as esbuild.Plugin,
-      fetchPlugin(rawCode) as esbuild.Plugin,
-    ],
-    define: {
-      "process.env.NODE_ENV": "'production'",
-      global: "window",
-    },
-  });
-
-  return result.outputFiles[0].text;
+  try {
+    const result = await service.build({
+      entryPoints: ["index.js"],
+      bundle: true,
+      write: false,
+      plugins: [
+        unpkgPathPlugin() as esbuild.Plugin,
+        fetchPlugin(rawCode) as esbuild.Plugin,
+      ],
+      define: {
+        "process.env.NODE_ENV": "'production'",
+        global: "window",
+      },
+    });
+    return {
+      code: result.outputFiles[0].text,
+      err: "",
+    };
+  } catch (err) {
+    if (err instanceof Error) {
+      return {
+        code: "",
+        err: err.message,
+      };
+    }
+    throw err;
+  }
 };
