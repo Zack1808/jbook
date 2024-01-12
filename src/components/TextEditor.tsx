@@ -11,7 +11,7 @@ interface TextEditorPropsType {
 }
 
 const TextEditor: React.FC<TextEditorPropsType> = ({ cell }) => {
-  const [editting, setEditting] = useState<boolean>(true);
+  const [editting, setEditting] = useState<boolean>(false);
 
   const { updateCell } = useActions();
 
