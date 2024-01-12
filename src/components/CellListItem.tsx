@@ -4,18 +4,27 @@ import TextEditor from "./TextEditor";
 
 import ActionBar from "./ActionBar";
 
+import "./CellListItem.css";
+
 interface CellListItemPropsType {
   cell: Cell;
 }
 
 const CellListItem: React.FC<CellListItemPropsType> = ({ cell }) => {
   return (
-    <div>
-      <ActionBar id={cell.id} />
+    <div className="cell-list-item">
       {cell.type === "code" ? (
-        <CodeCell cell={cell} />
+        <>
+          <div className="action-bar-wrapper">
+            <ActionBar id={cell.id} />
+          </div>
+          <CodeCell cell={cell} />
+        </>
       ) : (
-        <TextEditor cell={cell} />
+        <>
+          <TextEditor cell={cell} />
+          <ActionBar id={cell.id} />
+        </>
       )}
     </div>
   );
