@@ -1,0 +1,31 @@
+.add-cell {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  margin-block: 8px;
+}
+
+.force-visible.add-cell {
+  opacity: 1;
+}
+
+.add-cell .divider {
+  position: absolute;
+  width: 95%;
+  top: 50%;
+  bottom: 50%;
+  border-bottom: 1px solid gray;
+  z-index: -1;
+}
+
+.add-cell .add-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 80px;
+}
+
+.add-cell:hover {
+  opacity: 1;
+}
