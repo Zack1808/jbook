@@ -1,6 +1,4 @@
-import { useState, useEffect } from "react";
-
-import bundle from "../bundler";
+import { useEffect } from "react";
 
 import CodeEditor from "../components/CodeEditor";
 import Preview from "../components/Preview";
@@ -8,6 +6,7 @@ import Resizable from "./Resizable";
 
 import { Cell } from "../state";
 import { useActions } from "../hooks/useActions";
+import { useTypedSelector } from "../hooks/useTypedSelector";
 
 import "./CodeCell.css";
 
@@ -16,22 +15,24 @@ interface CodeCellPropsType {
 }
 
 const CodeCell: React.FC<CodeCellPropsType> = ({ cell }) => {
-  const [code, setCode] = useState<string>("");
-  const [err, setErr] = useState<string>("");
+  const { updateCell, createBundle } = useActions();
 
-  const { updateCell } = useActions();
+  const bundle = useTypedSelector((state) => state.bundles[cell.id]);
 
   const onChange = (value: string) => updateCell(cell.id, value);
 
   useEffect(() => {
+    if (!bundle) {
+      createBundle(cell.id, cell.content);
+      return;
+    }
+
     const timer = setTimeout(async () => {
-      const output = await bundle(cell.content);
-      setCode(output.code);
-      setErr(output.err);
+      createBundle(cell.id, cell.content);
     }, 1000);
 
     return () => clearTimeout(timer);
-  }, [cell.content]);
+  }, [cell.content, cell.id]);
 
   return (
     <Resizable axis="vertical">
@@ -39,7 +40,15 @@ const CodeCell: React.FC<CodeCellPropsType> = ({ cell }) => {
         <Resizable axis="horizontal">
           <CodeEditor initialValue={cell.content} onChange={onChange} />
         </Resizable>
-        <Preview code={code} bundlingStatus={err} />
+        {!bundle || bundle.loading ? (
+          <div className="progress-cover">
+            <progress className="progress is-small is-primary" max="100">
+              Loading
+            </progress>
+          </div>
+        ) : (
+          <Preview code={bundle?.code} bundlingStatus={bundle?.err} />
+        )}
       </div>
     </Resizable>
   );
