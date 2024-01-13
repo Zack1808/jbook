@@ -18,21 +18,31 @@ const CodeCell: React.FC<CodeCellPropsType> = ({ cell }) => {
   const { updateCell, createBundle } = useActions();
 
   const bundle = useTypedSelector((state) => state.bundles[cell.id]);
+  const cumulativeCode = useTypedSelector((state) => {
+    const { data, order } = state.cells;
+    const orderedCells = order.map((id) => data[id]);
+    const cumulativeCode = [];
+    for (let c of orderedCells) {
+      if (c.type === "code") cumulativeCode.push(c.content);
+      if (c.id === cell.id) break;
+    }
+    return cumulativeCode;
+  });
 
   const onChange = (value: string) => updateCell(cell.id, value);
 
   useEffect(() => {
     if (!bundle) {
-      createBundle(cell.id, cell.content);
+      createBundle(cell.id, cumulativeCode.join("\n"));
       return;
     }
 
     const timer = setTimeout(async () => {
-      createBundle(cell.id, cell.content);
+      createBundle(cell.id, cumulativeCode.join("\n"));
     }, 1000);
 
     return () => clearTimeout(timer);
-  }, [cell.content, cell.id]);
+  }, [cumulativeCode.join("\n"), cell.id]);
 
   return (
     <Resizable axis="vertical">
